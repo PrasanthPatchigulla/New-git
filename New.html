@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Selection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to left, #ff0000,grey);
+        }
+        .selection-container, .content {
+            display: none;
+        }
+        .selection-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .header {
+            width: 100%;
+            background-color: red;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 24px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .main-content {
+            margin-top: 80px; /* Adjust based on header height */
+            text-align: center;
+            height: calc(100vh - 80px); /* Adjust based on header height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 300px;
+            max-width: 100%;
+        }
+        .form-container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-container button {
+            padding: 10px 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: darkred;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .content{
+          margin-left: 580px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Header -->
+    <div class="header">Ambulance Detection</div>
+
+    <!-- Language Selection Page -->
+    <div class="selection-container" id="selection-container">
+        <h1>Select Your Language</h1>
+        <button onclick="showContent('english')">English</button>
+        <button onclick="showContent('telugu')">Telugu</button>
+        <button onclick="showContent('hindi')">Hindi</button>
+        <button onclick="showContent('marathi')">Marathi</button>
+        <button onclick="showContent('tamil')">Tamil</button>
+    </div>
+
+    <!-- Content Pages -->
+    <div class="content" id="content-english">
+        <div class="main-content">
+            <div class="form-container">
+                <h2>Enter Your Area</h2>
+                <input type="text" id="area-input" placeholder="Enter your area">
+                <button onclick="checkAmbulance('english')">Check</button>
+                <div class="result" id="result-english"></div>
+            </div>
+        </div>
+    </div>
+    <div class="content" id="content-telugu">
+        <div class="main-content">
+            <div class="form-container">
+                <h2>మీ ప్రాంతాన్ని నమోదు చేయండి</h2>
+                <input type="text" id="area-input-telugu" placeholder="మీ ప్రాంతాన్ని నమోదు చేయండి">
+                <button onclick="checkAmbulance('telugu')">చెక్ చేయండి</button>
+                <div class="result" id="result-telugu"></div>
+            </div>
+        </div>
+    </div>
+    <div class="content" id="content-hindi">
+        <div class="main-content">
+            <div class="form-container">
+                <h2>अपना क्षेत्र दर्ज करें</h2>
+                <input type="text" id="area-input-hindi" placeholder="अपना क्षेत्र दर्ज करें">
+                <button onclick="checkAmbulance('hindi')">चेक करें</button>
+                <div class="result" id="result-hindi"></div>
+            </div>
+        </div>
+    </div>
+    <div class="content" id="content-marathi">
+        <div class="main-content">
+            <div class="form-container">
+                <h2>तुमचा क्षेत्र प्रविष्ट करा</h2>
+                <input type="text" id="area-input-marathi" placeholder="तुमचा क्षेत्र प्रविष्ट करा">
+                <button onclick="checkAmbulance('marathi')">चेक करा</button>
+                <div class="result" id="result-marathi"></div>
+            </div>
+        </div>
+    </div>
+    <div class="content" id="content-tamil">
+        <div class="main-content">
+            <div class="form-container">
+                <h2>உங்கள் பகுதியை உள்ளிடவும்</h2>
+                <input type="text" id="area-input-tamil" placeholder="உங்கள் பகுதியை உள்ளிடவும்">
+                <button onclick="checkAmbulance('tamil')">சரிபார்க்கவும்</button>
+                <div class="result" id="result-tamil"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showContent(language) {
+            // Hide the selection container
+            document.getElementById('selection-container').style.display = 'none';
+            
+            // Hide all content sections
+            document.querySelectorAll('.content').forEach(function(el) {
+                el.style.display = 'none';
+            });
+            
+            // Show the selected language content
+            document.getElementById('content-' + language).style.display = 'flex';
+        }
+
+        function checkAmbulance(language) {
+            // Get the input value
+            var areaInput = document.getElementById('area-input' + (language === 'english' ? '' : '-' + language));
+            var area = areaInput.value;
+            
+            // Simulate checking for an ambulance
+            var resultText = Math.random() > 0.5 ? "An ambulance is nearby!" : "No ambulance nearby.";
+            
+            // Display the result
+            document.getElementById('result-' + language).innerText = resultText;
+        }
+    </script>
+</body>
+</html>

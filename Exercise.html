@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My website</title>
+    <style>
+        /* General Styling */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #3b7746;
+            color: white;
+            text-align: center;
+        }
+
+        /* Animated Gradient Background */
+        body {
+            background: linear-gradient(130deg, #0f2027, #203a43, #2c5364);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-top: 50px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 20px;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: #28a745;
+            background-image: linear-gradient(315deg, #e32a2a 0%, #27f1f1 74%);
+            color: white;
+            box-shadow: 3px 3px 5px rgb(246, 80, 80), -3px -3px 5px rgb(47, 255, 238);
+            text-shadow: 3px 3px 5px black;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-image: linear-gradient(315deg, #51f2f2 0%, #d44e4e 74%);
+        }
+
+        .container {
+            display: none;
+            margin-top: 50px;
+        }
+
+        .container.active {
+            display: block;
+        }
+
+        .options {
+            margin: 20px;
+        }
+
+        .options button {
+            width: 80%;
+            margin-top: 10px;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        .form-container {
+            margin: 30px auto;
+            width: 50%;
+            background-color: #2c3e50;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .team-options {
+            margin-top: 20px;
+        }
+
+        .notifications {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Page -->
+    <div id="welcomePage">
+        <h1>Login page</h1>
+        <button onclick="navigateTo('optionsPage')">Get Started</button>
+    </div>
+
+    <!-- Options Page -->
+    <div id="optionsPage" class="container">
+        <h2>Choose an Option</h2>
+        <div class="options">
+            <button onclick="navigateTo('signupPage')">Sign Up</button>
+            <button onclick="navigateTo('loginPage')">Log In</button>
+        </div>
+    </div>
+
+    <!-- Signup Page -->
+    <div id="signupPage" class="container">
+        <h2>Sign Up</h2>
+        <div class="options">
+            <button onclick="navigateTo('signupTeamLeader')">Sign Up as Owner</button>
+            <button onclick="navigateTo('signupUser')">Sign Up as User</button>
+        </div>
+    </div>
+
+    <!-- Team Leader Signup Form -->
+    <div id="signupTeamLeader" class="container form-container">
+        <h3>Sign Up as Owner</h3>
+        <input type="email" id="signupTeamLeaderEmail" placeholder="Business Email" required>
+        <input type="text" id="signupTeamLeaderOrg" placeholder="Organization Name" required>
+        <input type="text" id="signupTeamLeaderName" placeholder="Full Name" required>
+        <input type="tel" id="signupTeamLeaderPhone" placeholder="Phone Number" required>
+        <input type="password" id="signupTeamLeaderPassword" placeholder="Password" required>
+        <button onclick="signUpTeamLeader()">Submit</button>
+    </div>
+
+    <!-- User Signup Form -->
+    <div id="signupUser" class="container form-container">
+        <h3>Sign Up as User</h3>
+        <input type="email" id="signupUserEmail" placeholder="Business Email" required>
+        <input type="text" id="signupUserOrg" placeholder="Organization Name" required>
+        <input type="text" id="signupUserName" placeholder="Full Name" required>
+        <input type="tel" id="signupUserPhone" placeholder="Phone Number" required>
+        <input type="password" id="signupUserPassword" placeholder="Password" required>
+        <button onclick="signUpUser()">Submit</button>
+    </div>
+
+    <!-- Login Page -->
+    <div id="loginPage" class="container">
+        <h2>Log In</h2>
+        <div class="options">
+            <button onclick="navigateTo('loginUser')">Log In as User</button>
+            <button onclick="navigateTo('loginTeamLeader')">Log In as Team Leader</button>
+            <button onclick="alert('Team members cannot log in directly. Please request to join a team.')">Log In as Team Member</button>
+        </div>
+    </div>
+
+    <!-- User Login Form -->
+    <div id="loginUser" class="container form-container">
+        <h3>Log In as User</h3>
+        <input type="email" id="loginUserEmail" placeholder="Email" required>
+        <input type="password" id="loginUserPassword" placeholder="Password" required>
+        <button onclick="loginUser()">Log In</button>
+    </div>
+
+    <!-- Team Leader Login Form -->
+    <div id="loginTeamLeader" class="container form-container">
+        <h3>Log In as Team Leader</h3>
+        <input type="email" id="loginTeamLeaderEmail" placeholder="Email" required>
+        <input type="password" id="loginTeamLeaderPassword" placeholder="Password" required>
+        <button onclick="loginTeamLeader()">Log In</button>
+    </div>
+
+    <!-- Team Leader Dashboard -->
+    <div id="teamLeaderDashboard" class="container">
+        <h2>Team Leader Dashboard</h2>
+        <div class="team-options">
+            <button onclick="navigateTo('createTeam')">Create a Team Code</button>
+            <button onclick="navigateTo('notifications')">View Join Requests</button>
+        </div>
+    </div>
+
+    <!-- Create Team Code -->
+    <div id="createTeam" class="container form-container">
+        <h3>Create a Team Code</h3>
+        <input type="text" id="teamCode" placeholder="Enter Team Code" required>
+        <input type="password" id="teamPassword" placeholder="Set Team Password" required>
+        <button onclick="createTeamCode()">Create Code</button>
+    </div>
+
+    <!-- Notifications Page -->
+    <div id="notifications" class="container">
+        <h3>Join Requests</h3>
+        <div id="requestList">
+            <!-- Notifications for team join requests will appear here -->
+        </div>
+    </div>
+
+    <!-- User Dashboard -->
+    <div id="userDashboard" class="container">
+        <h2>User Dashboard</h2>
+        <button onclick="navigateTo('joinTeamPage')">Join a Team</button>
+    </div>
+
+    <!-- Join Team Page -->
+    <div id="joinTeamPage" class="container form-container">
+        <h3>Join a Team</h3>
+        <input type="text" id="inputTeamCode" placeholder="Enter Team Code" required>
+        <input type="password" id="inputTeamPassword" placeholder="Enter Team Password" required>
+        <button onclick="sendJoinRequest()">Request to Join</button>
+        <p id="errorMessage" style="color: red;"></p>
+    </div>
+
+    <script>
+        // Simulating a simple database using localStorage
+        const LOCAL_STORAGE_KEY = 'appData';
+
+        // Initialize app data in localStorage
+        function initializeData() {
+            if (!localStorage.getItem(LOCAL_STORAGE_KEY)) {
+                const initialData = {
+                    teamLeaders: {},
+                    users: {},
+                    joinRequests: {}
+                };
+                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(initialData));
+            }
+        }
+
+        initializeData();
+
+        function navigateTo(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.container');
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // Function to sign up as a team leader
+        function signUpTeamLeader() {
+            const email = document.getElementById('signupTeamLeaderEmail').value;
+            const org = document.getElementById('signupTeamLeaderOrg').value;
+            const name = document.getElementById('signupTeamLeaderName').value;
+            const phone = document.getElementById('signupTeamLeaderPhone').value;
+            const password = document.getElementById('signupTeamLeaderPassword').value;
+
+            if (email && org && name && phone && password) {
+                const appData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+                appData.teamLeaders[email] = {
+                    org,
+                    name,
+                    phone,
+                    password,
+                    teamCodes: [],
+                    notifications: []
+                };
+                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appData));
+                alert('Team Leader signed up successfully!');
+                navigateTo('loginPage');
+            } else {
+                alert('Please fill all fields.');
+            }
+        }
+
+        // Function to sign up as a user
+        function signUpUser() {
+            const email = document.getElementById('signupUserEmail').value;
+            const org = document.getElementById('signupUserOrg').value;
+            const name = document.getElementById('signupUserName').value;
+            const phone = document.getElementById('signupUserPhone').value;
+            const password = document.getElementById('signupUserPassword').value;
+
+            if (email && org && name && phone && password) {
+                const appData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+                appData.users[email] = {
+                    org,
+                    name,
+                    phone,
+                    password
+                };
+                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appData));
+                alert('User signed up successfully!');
+                navigateTo('loginPage');
+            } else {
+                alert('Please fill all fields.');
+            }
+        }
+
+        // Function to log in as a user
+        function loginUser() {
+            const email = document.getElementById('loginUserEmail').value;
+            const password = document.getElementById('loginUserPassword').value;
+            const appData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+
+            if (appData.users[email] && appData.users[email].password === password) {
+                alert('User logged in successfully!');
+                navigateTo('userDashboard');
+            } else {
+                alert('Invalid email or password.');
+            }
+        }
+
+        // Function to log in as a team leader
+        function loginTeamLeader() {
+            const email = document.getElementById('loginTeamLeaderEmail').value;
+            const password = document.getElementById('loginTeamLeaderPassword').value;
+            const appData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+
+            if (appData.teamLeaders[email] && appData.teamLeaders[email].password === password) {
+                alert('Team Leader logged in successfully!');
+                navigateTo('teamLeaderDashboard');
+            } else {
+                alert('Invalid email or password.');
+            }
+        }
+
+        // Function to create a team code
+        function createTeamCode() {
+            const teamCode = document.getElementById('teamCode').value;
+            const teamPassword = document.getElementById('teamPassword').value;
+
+            if (teamCode && teamPassword) {
+                const appData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+                const teamLeaderEmail = document.getElementById('loginTeamLeaderEmail').value;
+                if (appData.teamLeaders[teamLeaderEmail]) {
+                    appData.teamLeaders[teamLeaderEmail].teamCodes.push({
+                        code: teamCode,
+                        password: teamPassword
+                    });
+                    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appData));
+                    alert('Team code created successfully!');
+                    navigateTo('teamLeaderDashboard');
+                } else {
+                    alert('Team Leader not logged in.');
+                }
+            } else {
+                alert('Please enter both team code and password.');
+            }
+        }
+
+        // Function to send a join request
+        function sendJoinRequest() {
+            const inputCode = document.getElementById('inputTeamCode').value;
+            const inputPassword = document.getElementById('inputTeamPassword').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            const appData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+            const userEmail = document.getElementById('loginUserEmail').value;
+
+            const validCode = Object.values(appData.teamLeaders).find(teamLeader =>
+                teamLeader.teamCodes.some(codeObj =>
+                    codeObj.code === inputCode && codeObj.password === inputPassword
+                )
+            );
+
+            if (validCode) {
+                appData.joinRequests[userEmail] = {
+                    code: inputCode,
+                    password: inputPassword
+                };
+                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appData));
+                alert('Join request sent successfully!');
+                navigateTo('userDashboard');
+            } else {
+                errorMessage.textContent = 'Invalid team code or password. Please try again.';
+            }
+        }
+
+        // Function to display notifications for the team leader
+        function displayNotifications() {
+            const requestList = document.getElementById('requestList');
+            requestList.innerHTML = ''; // Clear previous notifications
+
+            const appData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+            const teamLeaderEmail = document.getElementById('loginTeamLeaderEmail').value;
+
+            if (appData.teamLeaders[teamLeaderEmail]) {
+                appData.teamLeaders[teamLeaderEmail].notifications.forEach(request => {
+                    const requestItem = document.createElement('div');
+                    requestItem.textContent = request;
+
+                    // Approve/Reject buttons
+                    const approveButton = document.createElement('button');
+                    approveButton.textContent = 'Approve';
+                    approveButton.onclick = () => {
+                        alert('Request Approved!');
+                        // Clear the request from the list after approval
+                        requestList.removeChild(requestItem);
+                        // Add logic to update user status as team member
+                    };
+
+                    const rejectButton = document.createElement('button');
+                    rejectButton.textContent = 'Reject';
+                    rejectButton.onclick = () => {
+                        alert('Request Rejected!');
+                        // Clear the request from the list after rejection
+                        requestList.removeChild(requestItem);
+                    };
+
+                    requestItem.appendChild(approveButton);
+                    requestItem.appendChild(rejectButton);
+                    requestList.appendChild(requestItem);
+                });
+            } else {
+                requestList.innerHTML = '<p>No join requests available.</p>';
+            }
+        } 
+
+        // Load notifications when navigating to the notifications page
+        document.getElementById('notifications').addEventListener('click', displayNotifications);
+    </script>
+</body>
+</html>
